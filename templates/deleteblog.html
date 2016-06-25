@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link type="text/css" rel="stylesheet" href="/css/main.css" />
+
+  <title>delete your blog</title>
+</head>
+<body>
+	<a href="/blog" class="main-title">
+		CS 253 Blog
+	</a>
+
+  <div class="login-area">
+    {% if user %}
+      {{user.name}} (<a class="login-link" href="/logout">logout</a>)
+    {% else %}
+      <a class="login-link" href="/login">login</a>
+      |
+      <a class="login-link" href="/signup">signup</a>
+    {% endif %}
+  </div>
+	{% if error %}
+		<div class="error"> {{error}} </div>
+	{% else %}
+		<div>
+			Are you sure to delete this blog?
+			<form method="post">
+				<input type="submit" value="Yes" name="Y">
+				<input type="submit" value="No" name="N">
+			</form>
+		</div>
+	{% endif %}
+	
+</body>
+</html>

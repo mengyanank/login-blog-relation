@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>New Post</title>
+		<link type="text/css" rel="stylesheet" href="/css/main.css" />		
+	</head>
+	
+	<body>
+		<a href="/blog" class="main-title">
+		CS 253 Blog
+		</a>
+
+  <div class="login-area">
+    {% if user %}
+      {{user.username}} (<a class="login-link" href="/logout">logout</a>)
+    {% else %}
+      <a class="login-link" href="/login">login</a>
+      |
+      <a class="login-link" href="/signup">signup</a>
+    {% endif %}
+  </div>
+		<form method="post">
+			<label>
+				<div>
+					subject: 
+				</div>
+				<input type="text" name="title" value={{title}}>
+			</label>
+			
+			<label> 
+				<div>
+					content: 
+				</div>
+				<textarea name="content" ></textarea>
+			</label>
+			
+			<div class="error">
+			{{error}}
+			</div>
+			<input type="submit" value="submit"><br>
+		</form>
+	</body>
+</html>

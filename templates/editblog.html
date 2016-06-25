@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link type="text/css" rel="stylesheet" href="/css/main.css" />
+
+  <title>edit your blog</title>
+</head>
+<body>
+	<a href="/blog" class="main-title">
+		CS 253 Blog
+	</a>
+
+  <div class="login-area">
+    {% if user %}
+      {{user.username}} (<a class="login-link" href="/logout">logout</a>)
+    {% else %}
+      <a class="login-link" href="/login">login</a>
+      |
+      <a class="login-link" href="/signup">signup</a>
+    {% endif %}
+  </div>
+	{% if user_error %}
+		<div class="error"> {{user_error}} </div>
+	{% else %}
+		<form  method="post">
+			<label>
+				<div>
+					subject: 
+				</div>
+				<input type="text" name="title" value={{blog.title}}>
+			</label>
+			
+			<label> 
+				<div>
+					content: 
+				</div>
+				<textarea name="content">{{blog.content}}</textarea>
+			</label>
+			
+			<div class="error">
+			{{error}}
+			</div>
+			<input type="submit" value="submit"><br>
+		</form>
+	{% endif %}
+	
+</body>
+</html>

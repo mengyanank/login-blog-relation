@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link type="text/css" rel="stylesheet" href="/css/main.css" />
+		<title>User Login</title>
+		
+	</head>
+<body>
+	<a href="/blog" class="main-title">
+		CS 253 Blog
+	</a>
+
+  <div class="login-area">
+    {% if user %}
+      {{user.username}} (<a class="login-link" href="/logout">logout</a>)
+    {% else %}
+      <a class="login-link" href="/login">login</a>
+      |
+      <a class="login-link" href="/signup">signup</a>
+    {% endif %}
+  </div>
+		<h1>
+			Login
+		</h1>
+		<form method="post">
+			<table>
+				<tr>
+					<td>username :</td> 
+					<td> <input type="text" name="username"> </td>
+					<td style="color:red">{{error}}</td>
+				</tr>
+				<tr>
+					<td> password : </td> 
+					<td> <input type="password" name="password"> </td>
+				</tr>
+			</table>
+			<input type="submit" value="login">
+		</form>
+</body>
+</html>

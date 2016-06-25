@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>User Signup</title>
+		<link type="text/css" rel="stylesheet" href="/css/main.css" />
+	</head>
+	
+	<body>
+		<a href="/blog" class="main-title">
+		CS 253 Blog
+		</a>
+
+  <div class="login-area">
+    {% if user %}
+      {{user.username}} (<a class="login-link" href="/logout">logout</a>)
+    {% else %}
+      <a class="login-link" href="/login">login</a>
+      |
+      <a class="login-link" href="/signup">signup</a>
+    {% endif %}
+  </div>
+		<h1>
+		Signup
+		</h1>
+		<div class="error">
+			{{error}}
+		</div>
+		<form  method="post">
+			<table>
+				<tr>
+					<td>Username: </td>
+					<td><input type="text" name="username" value={{ua}}></td>
+					<td style="color:red;">{{username_error}}</td>
+				</tr>
+				<tr>
+					<td>Password: </td>
+					<td><input type="password" name="password" value={{pw}}></td>
+					<td style="color:red;">{{password_error}}</td>
+					
+				</tr>
+				<tr>
+					<td>Verify Password: </td>
+					<td><input type="password" name="verify" value={{ver}}></td>
+					<td style="color:red;">{{password_equality_error}}</td>
+				</tr>
+				<tr>
+					<td>Email (optional): </td>
+					<td><input type="text" name="email" value={{em}}></td>
+					<td style="color:red;">{{email_error}}</td>
+				</tr>
+			</table>
+			<input type="submit" value="Register">
+		</form>
+	</body>
+</html>

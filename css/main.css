@@ -1,0 +1,69 @@
+.login-area {
+    font-size: 13px;
+    color: gray;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.CS {
+	width:50%;
+	margin: auto;
+}
+
+.new-post {
+	text-align: center;
+}
+
+.main-title {
+	
+    display: block;
+    color: #222;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    text-decoration: none;
+}
+
+.blogs-heading {
+	font-size: 50px;
+    font-weight: bold;
+    margin-bottom: 20px;
+	text-align: center;
+}
+
+.post-heading {
+    position: relative;
+	
+    border-bottom: 3px solid #666;
+}
+
+.post-title {
+	width: 50%;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.post-created {
+	width: 50%;
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	text-align: right;
+}
+
+.post-content {
+    margin-top: 15px;
+	
+}
+
+.blogs-body {
+    width:80%;
+    
+	margin: auto;
+}
+
+.error {
+	color: red;
+}

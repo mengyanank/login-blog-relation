@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+		<div class="new-post">
+			<a href="/blog/newpost">New blog</a>
+		</div>
+		{% for post in blogs %}
+		<div class="post-heading">
+			<div class="post-title">{{post.title}}</div>
+			<div class="post-created">{{post.created}}</div>
+		</div>
+		<div>
+			By {{post.writer.username}}
+		</div>
+		<div>
+			<a href={{"/blog/details?id=" + post.key().id()|string}}>Read More >></a>
+		</div>
+		<br>
+		{% endfor %}
+
+
+{% endblock %}
+

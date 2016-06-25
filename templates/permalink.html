@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link type="text/css" rel="stylesheet"  href="/css/main.css" >
+		<title>blog</title>		
+	</head>
+	<body>
+		<a href="/blog" class="main-title">
+		CS 253 Blog
+		</a>
+
+	<div class="login-area">
+		{% if user %}
+			{{user.username}} (<a class="login-link" href="/logout">logout</a>)
+		{% else %}
+			<a class="login-link" href="/login">login</a>
+			|
+			<a class="login-link" href="/signup">signup</a>
+		{% endif %}
+	</div>
+	<div class="blogs-body">
+		<div class="post-heading">
+			<div class="post-title">{{post.title}}</div>
+			<div class="post-created">{{post.created}}</div>
+		</div>
+		<div class="post-content">
+			
+			{{post.content}}
+		</div>
+		{% if user %}
+		<div>
+			<a href={{"/blog/edit?id=" + post.key().id()|string}}>edit</a>
+			<a href={{"/blog/delete?id=" + post.key().id()|string}}>delete</a>
+		</div>
+		<div>
+			<form method="post">
+				<label> 
+					<div>
+						comment: 
+					</div>
+					<textarea name="comment" ></textarea>
+				</label>
+			
+				<div class="error">
+					{{error}}
+				</div>
+				<input type="submit" value="submit"><br>
+			</form>
+		</div>
+		{% endif %}
+		{% for comment in post.comments %}
+			<div>
+				{{comment.Commenter}} : {{comment.content}}
+				
+			</div>
+		{% endfor %}
+		</div>
+	</body>
+</html>
