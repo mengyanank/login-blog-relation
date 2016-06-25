@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+		{%if user%}
 		<div class="new-post">
 			<a href="/blog/newpost">New blog</a>
+			<a href="/welcome" class="homepage">My homepage</a>
 		</div>
+		{%endif%}
 		{% for post in blogs %}
 		<div class="post-heading">
 			<div class="post-title">{{post.title}}</div>

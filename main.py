@@ -336,6 +336,10 @@ class ReadBlogHandler(Handler):
         post_id = self.request.get('id')
         self.redirect('/blog/%s' % str(post_id))
 
+class MainHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.out.write("Hello World")
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/signup', SignHandler),

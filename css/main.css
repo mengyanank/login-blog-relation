@@ -41,7 +41,7 @@
 
 .post-title {
 	width: 50%;
-	font-size: 30px;
+	font-size: 20px;
 	font-weight: bold;
 }
 
@@ -66,4 +66,9 @@
 
 .error {
 	color: red;
+}
+
+.homepage {
+	
+	margin-left: 20px;
 }
