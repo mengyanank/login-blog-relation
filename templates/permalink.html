@@ -34,7 +34,7 @@
 			<a href={{"/blog/edit?id=" + post.key().id()|string}}>edit</a>
 			<a href={{"/blog/delete?id=" + post.key().id()|string}}>delete</a>
 		</div>
-		<div>
+		<div class="comment-form">
 			<form method="post">
 				<label> 
 					<div>
@@ -51,10 +51,18 @@
 		</div>
 		{% endif %}
 		{% for comment in post.comments %}
+		<div class="comment-record">
 			<div>
 				{{comment.Commenter}} : {{comment.content}}
 				
 			</div>
+			{% if comment.Commenter == user.username %}
+			<div>
+				<a href={{"/comment/edit?id=" + comment.key().id()|string}}>edit</a>
+				<a href={{"/comment/delete?id=" + comment.key().id()|string}}>delete</a>
+			</div>
+			{% endif %}
+		</div>
 		{% endfor %}
 		</div>
 	</body>

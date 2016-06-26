@@ -30,24 +30,26 @@ from google.appengine.ext import db
 template_dir = os.path.join(os.path.dirname(__file__),'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
 
-secure_str = 'abcde'
 
-USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
 def valid_username(username):
+    USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
     return USER_RE.match(username)
 
-PASS_RE = re.compile(r"^.{3,20}$")
+
 def valid_password(password):
+    PASS_RE = re.compile(r"^.{3,20}$")
     return PASS_RE.match(password)
 
-EMAIL_RE = re.compile(r"^[\S]+@[\S]+.[\S]+$")
+
 def valid_email(email):
+    EMAIL_RE = re.compile(r"^[\S]+@[\S]+.[\S]+$")
     return EMAIL_RE.match(email)
 
 def users_key(group = 'default'):
     return db.Key.from_path('users', group)
 
 def make_hash(s):
+    secure_str = 'abcde'
     return hmac.new(secure_str,s).hexdigest()
 
 def make_secure_cookie(val):
@@ -62,7 +64,7 @@ def make_salt():
     return ''.join(random.choice(string.letters) for x in xrange(5))
 
 def make_pw_hash(name, pw, salt=None):
-    # generate the hashed password for storage safety
+    """generate the hashed password for storage safety"""
     if not salt:
         salt = make_salt()
     res = hashlib.sha256(name+pw+salt).hexdigest()
@@ -142,7 +144,7 @@ class Handler(webapp2.RequestHandler):
         if cookie_val:
             return check_secure_val(cookie_val)
     
-    # this function is called for initialization when the Handler object is created
+    """this function is called for initialization when the Handler object is created"""
     def initialize(self, *a, **kw):
         webapp2.RequestHandler.initialize(self, *a, **kw)
         uid = self.read_secure_id()
@@ -157,7 +159,7 @@ class Handler(webapp2.RequestHandler):
         self.response.headers.add_header('Set-Cookie', 'user_id=%s; Path=/' % cookie_value)
 
 class SignHandler(Handler):
-    # new user registration page
+    """new user registration page"""
     def get(self):
         self.render('signup.html')
     
@@ -198,7 +200,7 @@ class SignHandler(Handler):
                 self.redirect('/welcome')
 
 class Login(Handler):
-    # the login page
+    """the login page"""
     def get(self):
         self.render('login.html')
 
@@ -220,8 +222,8 @@ class Logout(Handler):
         self.logout()
         self.redirect("/signup")
         
-class WelHandler(Handler):
-    # welcome the user who login or signup
+class WelcomeHandler(Handler):
+    """welcome the user who login or signup"""
     def get(self):
         if self.user:
             users = User.all()
@@ -230,13 +232,13 @@ class WelHandler(Handler):
             self.redirect("/signup")
 
 class BlogHandler(Handler):
-    # list all the blogs in the page
+    """list all the blogs in the page"""
     def get(self):
         blogs=Blog.all()
         self.render("blogs.html", blogs = blogs)
 
 class NewPostHandler(Handler):
-    # create a new blog
+    """create a new blog"""
     def get(self):
     	if self.user:
             self.render("newpost.html")
@@ -255,7 +257,7 @@ class NewPostHandler(Handler):
             self.render("newpost.html",title = title, content = content, error = error)
 
 class PostPage(Handler):
-    # blog post page
+    """blog post page"""
     def get(self, post_id):
         key = db.Key.from_path('Blog', int(post_id))
         post = db.get(key)
@@ -277,7 +279,7 @@ class PostPage(Handler):
             self.redirect('/blog/%s' % str(post.key().id()))
 
 class EditBlogHandler(Handler):
-    # editing blog page
+    """editing blog page"""
     def get(self):
         if not self.user:
         	self.redirect("/login")
@@ -306,7 +308,7 @@ class EditBlogHandler(Handler):
             self.render("editblog.html",title=title, content = content, error = error, blog = blog)
 
 class DelBlogHandler(Handler):
-    # deleting blog page
+    """deleting blog page"""
     def get(self):
         if not self.user:
             self.redirect("/login")
@@ -331,10 +333,41 @@ class DelBlogHandler(Handler):
         self.redirect("/blog")
 
 class ReadBlogHandler(Handler):
-    # redirect to the blog page
+    """redirect to the blog page"""
     def get(self):
         post_id = self.request.get('id')
         self.redirect('/blog/%s' % str(post_id))
+
+class DelCommentHandler(Handler):
+    """delete the comment"""
+    def get(self):
+        comment_id = self.request.get('id')
+        key = db.Key.from_path('Comment', int(comment_id))
+        comment = db.get(key)
+        blog_id = comment.post.key().id()
+        db.delete(comment)
+        self.redirect('/blog/%s' % str(blog_id))
+
+class EditCommentHandler(Handler):
+    """edit the comment"""
+    def get(self):
+        comment_id = self.request.get('id')
+        key = db.Key.from_path('Comment', int(comment_id))
+        comment = db.get(key)
+        self.render('editcomment.html',comment = comment)
+    
+    def post(self):
+        comment_id = self.request.get('id')
+        key = db.Key.from_path('Comment', int(comment_id))
+        comment = db.get(key)
+        blog_id = comment.post.key().id()
+        content = self.request.get("content")
+        if content:
+            comment.content = content
+            comment.put()
+            self.redirect('/blog/%s' % str(blog_id))
+        else:
+            self.render('editcomment.html', error = "the comment cannot be empty", comment=comment)
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -343,7 +376,7 @@ class MainHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/signup', SignHandler),
-    ('/welcome', WelHandler),
+    ('/welcome', WelcomeHandler),
     ('/login', Login),
     ('/logout', Logout),
     ('/blog', BlogHandler),
@@ -351,5 +384,7 @@ app = webapp2.WSGIApplication([
     ('/blog/([0-9]+)', PostPage),
     ('/blog/edit', EditBlogHandler),
     ('/blog/delete', DelBlogHandler),
-    ('/blog/details', ReadBlogHandler)
+    ('/blog/details', ReadBlogHandler),
+    ('/comment/delete',DelCommentHandler),
+    ('/comment/edit',EditCommentHandler)
     ], debug=True)

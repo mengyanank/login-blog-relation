@@ -24,11 +24,17 @@ After logging out, the cookie is cleared and user is redirected to the Signup pa
 user authorization:
 A user can only post, edit delete or comment a blog when logged in.
 A user cannot edit or delete other users' blogs.
+A user can edit and delete his own comment.
 
 Environment:
 The website is developed in Windows environment and deployed by Google App Engine.
+
+Running at Google App Engine Launcher:
 To run this code, open the "Google App Engine Launcher", click "File" at the top left and select "Add Existing Application",
-then choose the project folder in the "Application Path".
+then choose the project folder path in the "Application Path".
+The project will be shown at Google App Engine Launcher interface. Choose this projec and click "Run", then the project will run.
+Open you browser and type "localhost:(port)", you will see the website.
+
 The application is deployed at http://login-blog-relation.appspot.com. http://login-blog-relation.appspot.com/blog list all the
 blogs.
 
