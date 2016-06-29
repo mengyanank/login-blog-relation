@@ -75,10 +75,15 @@
 }
 
 .comment-form{
-	border-bottom: 3px solid #666;
-	padding-bottom: 10px;
+	
 }
 
 .comment-record {
 	margin-top: 10px;
+}
+
+.like-area {
+    padding-top: 5px;
+    border-bottom: 3px solid #666;
+    padding-bottom: 10px;
 }

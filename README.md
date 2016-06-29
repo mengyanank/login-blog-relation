@@ -25,6 +25,8 @@ user authorization:
 A user can only post, edit delete or comment a blog when logged in.
 A user cannot edit or delete other users' blogs.
 A user can edit and delete his own comment.
+A user can like a blog, but cannot like his own blogs. User can like a blog only once.
+A user can cancel his like to a blog post.
 
 Environment:
 The website is developed in Windows environment and deployed by Google App Engine.
